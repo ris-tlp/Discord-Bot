@@ -1,8 +1,9 @@
-import discord
+from discord.ext.commands import bot
 
+botPrefix = '.'
 TOKEN = ''
 
-client = discord.Client()
+client = bot(command_prefix=botPrefix)
 
 @client.event
 async def on_message(message):
