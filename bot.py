@@ -9,6 +9,7 @@ bot = commands.Bot(command_prefix = prefix)
 
 @bot.event
 async def on_ready():
+    await bot.change_presence(game = discord.Game(name = "with itself"))
     print("Bot running.")
 
 @bot.command(pass_context = True)
