@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+import random
 
 prefix = (".", "!")
 TOKEN = ''
@@ -31,5 +32,19 @@ async def kick(ctx, user: discord.User):
 @bot.command(pass_context = True)
 async def ban(ctx, user: discord.User):
     await bot.ban(user)
+
+@bot.command(pass_context = True, name = '8ball')
+async def ball(ctx):
+    responses = ["As I see it, yes",
+                "Ask again later",
+                "Better not tell you now",
+                "Don't count on it",
+                "It is certain",
+                "Most likely",
+                "Outlook good",
+                "Outlook not so good",
+                "Without a doubt",
+                "Doubtful"]
+    await bot.say(random.choice(responses) + ", " + ctx.message.author.mention)
 
 bot.run(TOKEN)
