@@ -1,24 +1,17 @@
-from discord.ext.commands import bot
+import discord
+from discord.ext import commands
 
-botPrefix = '.'
+prefix = (".", "!")
 TOKEN = ''
 
-client = bot(command_prefix=botPrefix)
+bot = commands.Bot(command_prefix = prefix)
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-
-    if message.content.startswith('!hello'):
-        msg = 'Hello {0.author.mention}'.format(message)
-        await client.send_message(message.channel, msg)
-
-@client.event
+@bot.event
 async def on_ready():
-    print('Logged in as')
-    print(client.user.name)
-    print(client.user.id)
-    print('------')
+    print("Bot running.")
 
-client.run(TOKEN)
+@bot.command(pass_context = True)
+async def ping(ctx):
+    await bot.say("pong!") #test
+
+bot.run(TOKEN)
