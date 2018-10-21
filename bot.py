@@ -131,3 +131,10 @@ def check_queue(id):
         player.start()
 
 ##################################
+
+
+@bot.command(pass_context = True)
+async def close(ctx):
+    await bot.logout()
+
+bot.run(TOKEN)
