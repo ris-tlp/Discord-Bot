@@ -54,6 +54,24 @@ async def ball(ctx):
                 "Doubtful"]
     await bot.say(random.choice(responses) + ", " + ctx.message.author.mention)
 
+@bot.command()
+async def help():
+    embed = discord.Embed(colour=discord.Colour.purple())
+    embed.set_author(name='Help')
+    embed.add_field(name = 'Prefixes', value = '! . ?', inline = False)
+    embed.add_field(name = 'ping', value = 'Returns pong', inline = True)
+    embed.add_field(name = 'kick (user)', value = 'Kicks a user', inline = True)
+    embed.add_field(name = 'ban (user)', value = 'Bans a user', inline = True)
+    embed.add_field(name = '8ball (question)', value = 'Magically answers a yes or no question', inline = False)
+    embed.add_field(name = 'join', value = 'Bot joins the voice channel you are in', inline = True)
+    embed.add_field(name = 'play (url)', value = 'Plays audio from specified YouTube link', inline = True)
+    embed.add_field(name = 'pause', value = 'Pauses audio being played', inline = True)
+    embed.add_field(name = 'resume', value = 'Resumes audio', inline = True)
+    embed.add_field(name = 'stop', value = 'Stops audio being played', inline = True)
+    embed.add_field(name = 'leave', value = 'Bot leaves voice channel', inline = True)
+
+    await bot.say(embed = embed)
+
 #################FOR THE MUSIC#################
 
 @bot.command(pass_context = True)
@@ -113,9 +131,3 @@ def check_queue(id):
         player.start()
 
 ##################################
-
-@bot.command(pass_context = True)
-async def bye(ctx):
-    await bot.logout()
-
-bot.run(TOKEN)
