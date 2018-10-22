@@ -88,30 +88,45 @@ async def leave(ctx):
         await voice_client.disconnect()
         print("Bot left the voice channel")
     else:
-        print("Bot was not in channel")
+        print("I need to be in a voice channel to do this!")
 
 @bot.command(pass_context = True)
 async def play(ctx, url):
     server = ctx.message.server
     voice_client = bot.voice_client_in(server)
     player = await voice_client.create_ytdl_player(url, after = lambda: check_queue(server.id))
-    players[server.id] = player
-    player.start()
+    if voice_client:
+        players[server.id] = player
+        player.start()
+    else:
+        await bot.say("I need to be in a voice channel to do this!")
 
 @bot.command(pass_context = True)
 async def pause(ctx):
-    id = ctx.message.server.id
-    players[id].pause()
+    voice_client = setServer(ctx)
+    if voice_client:
+        id = ctx.message.server.id
+        players[id].pause()
+    else:
+        await bot.say("I need to be in the voice channel to do this!")
 
 @bot.command(pass_context = True)
 async def stop(ctx):
-    id = ctx.message.server.id
-    players[id].stop()
+    voice_client = setServer(ctx)
+    if voice_client:
+        id = ctx.message.server.id
+        players[id].stop()
+    else:
+        await bot.say("I need to be in a voice channel to do this!")
 
 @bot.command(pass_context = True)
 async def resume(ctx):
-    id = ctx.message.server.id
-    players[id].resume()
+    voice_client = setServer(ctx)
+    if voice_client:
+        id = ctx.message.server.id
+        players[id].resume()
+    else:
+        await bot.say("I need to be in a voice channel to do this!")
 
 @bot.command(pass_context = True)
 async def queue(ctx, url):
@@ -119,10 +134,13 @@ async def queue(ctx, url):
     voice_client = bot.voice_client_in(server)
     player = await voice_client.create_ytdl_player(url, after = lambda: check_queue(server.id))
 
-    if server.id in queues:
-        queues[server.id].append(player)
+    if voice_client:
+        if server.id in queues:
+            queues[server.id].append(player)
+        else:
+            queues[server.id] = [player]
     else:
-        queues[server.id] = [player]
+        await bot.say("I need to be in a voice channel to do this!")
 
 def check_queue(id):
     if queues[id] != []:
@@ -130,6 +148,10 @@ def check_queue(id):
         players[id] = player
         player.start()
 
+def setServer(ctx):
+    server = ctx.message.server
+    voice_client = bot.voice_client_in(server)
+    return voice_client
 ##################################
 
 
