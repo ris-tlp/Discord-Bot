@@ -54,8 +54,10 @@ async def ball(ctx):
                 "Doubtful"]
     await bot.say(random.choice(responses) + ", " + ctx.message.author.mention)
 
-@bot.command()
-async def help():
+@bot.command(pass_context = True)
+async def help(ctx):
+    author = ctx.message.author
+
     embed = discord.Embed(colour=discord.Colour.purple())
     embed.set_author(name='Help')
     embed.add_field(name = 'Prefixes', value = '! . ?', inline = False)
@@ -70,7 +72,7 @@ async def help():
     embed.add_field(name = 'stop', value = 'Stops audio being played', inline = True)
     embed.add_field(name = 'leave', value = 'Bot leaves voice channel', inline = True)
 
-    await bot.say(embed = embed)
+    await bot.send_message(author, embed = embed)
 
 #################FOR THE MUSIC#################
 
