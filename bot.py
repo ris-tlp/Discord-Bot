@@ -5,6 +5,7 @@ import random
 import nacl
 import youtube_dl
 import asyncio
+from googlesearch import search
 
 prefix = (".", "!")
 TOKEN = ''
@@ -74,6 +75,17 @@ async def help(ctx):
     embed.add_field(name = 'leave', value = 'Bot leaves voice channel', inline = True)
 
     await bot.send_message(author, embed = embed)
+
+@bot.command()
+async def google(*args):
+    query = ""
+
+    for word in args:
+        query += word
+        query += " "
+
+    for i in search(query, num = 1, stop = 1, pause = 1):
+        await bot.say(i)
 
 #################FOR THE MUSIC#################
 
